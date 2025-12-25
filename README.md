@@ -7,15 +7,14 @@ This project is designed as a realistic backend systems simulation and does not 
 
 ---
 
-**** REALISTIC SOLUTION TO ONGOING PROBLEM ON COLLEGE CAMPUS
-    Vending machines do not accept payment via campus ID cards, even though they claim to do so. This is supposed to simulate a real working solution.
+## Problem Statement
+Many college campuses have vending machines that claim to accept student ID cards but don't actually work with the campus payment system. This project provides a **complete backend solution** that could enable this functionality, demonstrating how ID card payments could be securely implemented across campus vending machines.
 
 ## Project Overview
 
 Many universities allow students to use their ID cards to purchase items on campus. This project recreates that environment by implementing:
 
 - Student ID–linked accounts
-- Automated weekly allowance distribution
 - Vending machine purchase validation
 - Secure transaction tracking using mock campus currency
 
@@ -29,7 +28,7 @@ The system is fully testable without access to real vending machines or physical
 
 - Download and install **Java JDK 8+** and **MySQL Server 8.0+** from their official websites (remember your MySQL root password during installation)
 - Download **MySQL Connector/J (JDBC Driver)** from [mysql.com/downloads/connector/j/](https://dev.mysql.com/downloads/connector/j/) and save it somewhere accessible
-- Clone this repository: `git clone https://github.com/yourusername/campus-vending-system.git`
+- Clone this repository: `git clone https://github.com/zacton19/campus-vending-system.git`
 - Open **MySQL Command Line** or **MySQL Workbench** and connect to your MySQL server with your root password
 - Run the database schema: `source path/to/schema.sql` (replace `path/to/` with actual file path, or in MySQL Workbench: File → Open SQL Script → select `schema.sql` → click lightning bolt)
 - Run the seed data: `source path/to/seed.sql` (this creates 100 students, 15 vending machines, 50 products, and fully stocked inventory)
@@ -79,6 +78,15 @@ The system is fully testable without access to real vending machines or physical
 
 ---
 
+## Key Technical Features
+
+- **Client-Server Architecture**: Distributed system with TCP socket communication between vending machines and central payment server
+- **Secure Authentication**: PBKDF2 password hashing with SHA-256 and unique salts per user (10,000 iterations)
+- **ACID Transactions**: Database transactions ensure balance updates and inventory changes happen atomically
+- **Multi-threaded Server**: Handles multiple vending machines simultaneously
+- **SQL Injection Prevention**: All database queries use prepared statements
+- **Real-time Balance Updates**: Student balances sync across all 15 campus locations instantly
+
 ## System Architecture
 
 Student ID Card
@@ -93,61 +101,41 @@ Student Account Database
 
 ## Technology Stack
 
-- Backend: Java / Python / Node.js (implementation-dependent)
-- API: RESTful architecture
-- Database: SQL or NoSQL for account and transaction storage
-- Scheduler: Cron-style job for weekly allowance distribution
-- Simulation: Virtual vending machines and ID swipe emulator
+- **Backend**: Java
+- **Database**: MySQL with JDBC
+- **Architecture**: Client-Server model with TCP sockets
+- **Security**: PBKDF2WithHmacSHA256 password hashing
+- **Networking**: Java Socket API for client-server communication
+- **Data Transfer**: Java Object Serialization for request/response protocol
 
 ---
 
-## Simulation Environment
+## How It Works
 
-Because real vending machines and card readers are not available, the project includes:
+This is a **fully functional system** with:
+- Real client-server communication over TCP sockets
+- Actual MySQL database with persistent storage
+- Working authentication and transaction processing
+- Live balance updates across multiple machines
 
-- Virtual vending machines
-- Simulated ID swipes
-- Mock student accounts
-- End-to-end purchase testing
+While it doesn't connect to physical vending machines or real card readers, all the backend logic, security, and data handling are production-ready implementations that could be integrated with real hardware.
 
-This allows the full system to be developed, tested, and demonstrated entirely in software.
 
----
-
-## Repository Structure
-
-backend/
-  api/
-  services/
-  models/
-  scheduler/
-
-database/
-  schema.sql
-
-simulator/
-  vending_machine_simulator.py
-
-docs/
-  architecture.md
-
----
 
 ## Learning Objectives
 
-This project demonstrates understanding of:
+This project demonstrates:
 
-- Object-oriented programming
-- Backend system design
-- API development
-- Scheduled automation
-- Data modeling
-- Transaction validation
-- Secure system simulation
+- **Client-Server Architecture**: Multi-threaded server handling concurrent connections
+- **Network Programming**: TCP socket communication and custom protocol design
+- **Database Design**: Normalized schema with proper foreign keys and constraints
+- **Security**: Password hashing, salt generation, and SQL injection prevention
+- **Transaction Management**: ACID-compliant financial transactions
+- **Object-Oriented Design**: DAO pattern, DTOs, and separation of concerns
+- **Concurrency**: Thread-safe transaction processing with synchronization
 
 ---
 
-## Disclaimer
 
 This project uses **mock campus currency only**.
 It does not process real money, connect to financial institutions, or integrate with actual vending machines.
