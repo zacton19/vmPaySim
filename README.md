@@ -23,6 +23,30 @@ The system is fully testable without access to real vending machines or physical
 
 ---
 
+
+
+## Setup and Run Instructions ****** READ TO RUN PROGRAM
+
+- Download and install **Java JDK 8+** and **MySQL Server 8.0+** from their official websites (remember your MySQL root password during installation)
+- Download **MySQL Connector/J (JDBC Driver)** from [mysql.com/downloads/connector/j/](https://dev.mysql.com/downloads/connector/j/) and save it somewhere accessible
+- Clone this repository: `git clone https://github.com/yourusername/campus-vending-system.git`
+- Open **MySQL Command Line** or **MySQL Workbench** and connect to your MySQL server with your root password
+- Run the database schema: `source path/to/schema.sql` (replace `path/to/` with actual file path, or in MySQL Workbench: File → Open SQL Script → select `schema.sql` → click lightning bolt)
+- Run the seed data: `source path/to/seed.sql` (this creates 100 students, 15 vending machines, 50 products, and fully stocked inventory)
+- Open the project folder in **IntelliJ IDEA** (File → Open → select the cloned folder)
+- Add the MySQL Connector JAR to your project: **File → Project Structure (Ctrl+Alt+Shift+S) → Libraries → + → Java** → navigate to and select the `mysql-connector-j-8.x.x.jar` file you downloaded → click OK
+- Open `DatabaseManager.java` and update lines 6-7 with your MySQL credentials: change `"root"` if you used a different username, and replace `"your_password"` with your actual MySQL password
+- **Start the server first:** Run **PaymentServer.java** (right-click the file → Run 'PaymentServer.main()') - you should see "=== Campus Payment Server Starting ===" and "Listening on port 8888" - **leave this running**
+- **Then start the client:** Run **VendingMachineClient.java** in a separate run window (right-click → Run 'VendingMachineClient.main()') while the server is still running
+- Select a vending machine location (1-15) when prompted
+- Login with any Student ID from **S00001** to **S00100** (all test accounts use PIN: **1234**)
+- Browse products, make purchases, switch between different vending machines, and watch your balance update in real-time across all locations
+- The server handles all authentication, transactions, and database operations securely with password hashing and SQL injection prevention
+- **Troubleshooting:** If you get "Cannot connect to payment server" - make sure PaymentServer is running first and port 8888 isn't blocked
+- **Troubleshooting:** If you get "Authentication failed" - verify you're using Student ID format S00001-S00100 with PIN 1234
+- **Troubleshooting:** If you get "No products available" - make sure you ran both schema.sql and seed.sql files
+- **Troubleshooting:** If MySQL connection fails - verify MySQL Server is running (check Windows Services for "MySQL80") and credentials in DatabaseManager.java are correct
+
 ## Core Features
 
 ### Student Accounts
